@@ -20,16 +20,14 @@ namespace Business.Helpers
             var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
             foreach (var operationName in GetOperationNames())
             {
-                await mediator.Send(new CreateOperationClaimInternalCommand
-                {
-                    ClaimName = operationName
-                });
+                await mediator.Send(new CreateOperationClaimInternalCommand { ClaimName = operationName });
             }
 
             var operationClaims = (await mediator.Send(new GetOperationClaimsInternalQuery())).Data;
             var user = await mediator.Send(new RegisterUserInternalCommand
             {
                 FullName = "System Admin",
+                Username = "admin",
                 Password = "Q1w212*_*",
                 Email = "admin@adminmail.com",
             });
@@ -42,17 +40,18 @@ namespace Business.Helpers
 
         private static IEnumerable<string> GetOperationNames()
         {
-            var assemblies = Assembly.GetExecutingAssembly().GetTypes()
+            var assemblies = Assembly.GetExecutingAssembly()
+                .GetTypes()
                 .Where(x =>
                     // runtime generated anonmous type'larin assemblysi olmadigi icin null cek yap
                     x.Namespace != null && x.Namespace.StartsWith("Business.Handlers") &&
                     (x.Name.EndsWith("Command") || x.Name.EndsWith("Query")));
 
             return (from assembly in assemblies
-                    from nestedType in assembly.GetNestedTypes()
-                    from method in nestedType.GetMethods()
-                    where method.CustomAttributes.Any(u => u.AttributeType == typeof(SecuredOperation))
-                    select assembly.Name).ToList();
+                from nestedType in assembly.GetNestedTypes()
+                from method in nestedType.GetMethods()
+                where method.CustomAttributes.Any(u => u.AttributeType == typeof(SecuredOperation))
+                select assembly.Name).ToList();
         }
     }
 }

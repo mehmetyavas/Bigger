@@ -102,7 +102,7 @@ namespace Business
             services.AddTransient<IGroupClaimRepository, GroupClaimRepository>();
             services.AddTransient<IUserGroupRepository, UserGroupRepository>();
 
-            services.AddDbContext<ProjectDbContext, DArchInMemory>(ServiceLifetime.Transient);
+            services.AddDbContext<ProjectDbContext>(ServiceLifetime.Transient);
             services.AddSingleton<MongoDbContextBase, MongoDbContext>();
         }
 

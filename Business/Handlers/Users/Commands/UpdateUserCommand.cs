@@ -17,7 +17,6 @@ namespace Business.Handlers.Users.Commands
         public string Email { get; set; }
         public string FullName { get; set; }
         public string MobilePhones { get; set; }
-        public string Address { get; set; }
         public string Notes { get; set; }
 
         public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, IResult>
@@ -40,7 +39,6 @@ namespace Business.Handlers.Users.Commands
                 isThereAnyUser.FullName = request.FullName;
                 isThereAnyUser.Email = request.Email;
                 isThereAnyUser.MobilePhones = request.MobilePhones;
-                isThereAnyUser.Address = request.Address;
                 isThereAnyUser.Notes = request.Notes;
 
                 _userRepository.Update(isThereAnyUser);

@@ -24,8 +24,6 @@ using static Business.Handlers.Authorizations.Commands.RegisterUserCommand;
 
 namespace Tests.Business.Handlers
 {
-    
-
     [TestFixture]
     public class AuthorizationsTests
     {
@@ -49,7 +47,8 @@ namespace Tests.Business.Handlers
             _mediator = new Mock<IMediator>();
             _cacheManager = new Mock<ICacheManager>();
 
-            _loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object, _mediator.Object, _cacheManager.Object);
+            _loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object,
+                _mediator.Object, _cacheManager.Object);
             _registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object);
             _forgotPasswordCommandHandler = new ForgotPasswordCommandHandler(_userRepository.Object);
         }
@@ -65,18 +64,26 @@ namespace Tests.Business.Handlers
                 .Returns(() => Task.FromResult(user));
 
 
-            _tokenHelper.Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>())).Returns(new DArchToken()
-            {
-                Token = "TestToken",
-                Claims = new List<string>(),
-                Expiration = DateTime.Now.AddHours(1)
-            });
+            _tokenHelper.Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>()))
+                .Returns(new DArchToken()
+                {
+                    Token = "TestToken",
+                    Claims = new List<string>(),
+                    Expiration = DateTime.Now.AddHours(1)
+                });
 
             _userRepository.Setup(x => x.GetClaims(It.IsAny<int>()))
-                .Returns(new List<OperationClaim>() { new OperationClaim() { Id = 1, Name = "test" } });
+                .Returns(new List<OperationClaim>()
+                {
+                    new OperationClaim()
+                    {
+                        Id = 1,
+                        Name = "test"
+                    }
+                });
             _loginUserQuery = new LoginUserQuery
             {
-                Email = user.Email,
+                Username = user.Username,
                 Password = "123456"
             };
 
@@ -88,10 +95,7 @@ namespace Tests.Business.Handlers
         [Test]
         public async Task Handler_LoginWithRefreshTokenCommand_Success()
         {
-            var command = new LoginWithRefreshTokenQuery
-            {
-                RefreshToken = Guid.NewGuid().ToString()
-            };
+            var command = new LoginWithRefreshTokenQuery { RefreshToken = Guid.NewGuid().ToString() };
 
             _userRepository.Setup(x => x.GetByRefreshToken(It.IsAny<string>()))
                 .ReturnsAsync(DataHelper.GetUser("test"));
@@ -101,7 +105,8 @@ namespace Tests.Business.Handlers
             _tokenHelper.Setup(x => x.CreateToken<AccessToken>(It.IsAny<User>())).Returns(new AccessToken());
 
             var handler =
-                new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object, _cacheManager.Object);
+                new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object,
+                    _cacheManager.Object);
             var x = await handler.Handle(command, new CancellationToken());
 
             _userRepository.Verify(x => x.GetByRefreshToken(It.IsAny<string>()), Times.Once);
@@ -116,17 +121,15 @@ namespace Tests.Business.Handlers
         [Test]
         public async Task User_LoginWithRefreshTokenCommand_UserNotFound()
         {
-            var command = new LoginWithRefreshTokenQuery
-            {
-                RefreshToken = Guid.NewGuid().ToString()
-            };
+            var command = new LoginWithRefreshTokenQuery { RefreshToken = Guid.NewGuid().ToString() };
 
             User rt = null;
 
             _userRepository.Setup(x => x.GetByRefreshToken(It.IsAny<string>())).ReturnsAsync(rt);
 
             var handler =
-                new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object, _cacheManager.Object);
+                new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object,
+                    _cacheManager.Object);
             var x = await handler.Handle(command, new CancellationToken());
 
             _userRepository.Verify(x => x.GetByRefreshToken(It.IsAny<string>()), Times.Once);
@@ -140,7 +143,11 @@ namespace Tests.Business.Handlers
         [Test]
         public async Task Handler_Register()
         {
-            var registerUser = new User { Email = "test@test.com", FullName = "test test" };
+            var registerUser = new User
+            {
+                Email = "test@test.com",
+                FullName = "test test"
+            };
             _command = new RegisterUserCommand
             {
                 Email = registerUser.Email,

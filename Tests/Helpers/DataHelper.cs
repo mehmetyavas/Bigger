@@ -14,7 +14,6 @@ namespace Tests.Helpers
             return new User()
             {
                 UserId = 1,
-                Address = "test",
                 BirthDate = new DateTime(1988, 01, 01),
                 CitizenId = 12345678910,
                 Email = "test@test.com",
@@ -41,7 +40,6 @@ namespace Tests.Helpers
                 var user = new User()
                 {
                     UserId = i,
-                    Address = "test" + i,
                     BirthDate = new DateTime(1988, 01, 01),
                     CitizenId = 123456789101,
                     Email = "test@test.com",

@@ -24,7 +24,6 @@ namespace Business.Handlers.Users.Commands
         public DateTime BirthDate { get; set; }
         public int Gender { get; set; }
         public DateTime RecordDate { get; set; }
-        public string Address { get; set; }
         public string Notes { get; set; }
         public DateTime UpdateContactDate { get; set; }
         public string Password { get; set; }
@@ -55,7 +54,6 @@ namespace Business.Handlers.Users.Commands
                     Email = request.Email,
                     FullName = request.FullName,
                     Status = true,
-                    Address = request.Address,
                     BirthDate = request.BirthDate,
                     CitizenId = request.CitizenId,
                     Gender = request.Gender,

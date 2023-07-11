@@ -17,7 +17,6 @@ namespace DataAccess.Concrete.Configurations
             builder.Property(x => x.BirthDate);
             builder.Property(x => x.Gender);
             builder.Property(x => x.RecordDate);
-            builder.Property(x => x.Address).HasMaxLength(200);
             builder.Property(x => x.MobilePhones).HasMaxLength(30);
             builder.Property(x => x.Notes).HasMaxLength(500);
 

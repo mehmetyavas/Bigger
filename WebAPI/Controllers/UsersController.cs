@@ -88,7 +88,14 @@ namespace WebAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateUserDto updateUserDto)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateUserCommand{UserId = updateUserDto.UserId,Email = updateUserDto.Email,FullName = updateUserDto.FullName, MobilePhones = updateUserDto.MobilePhones, Address = updateUserDto.Address,Notes = updateUserDto.Notes}));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateUserCommand
+            {
+                UserId = updateUserDto.UserId,
+                Email = updateUserDto.Email,
+                FullName = updateUserDto.FullName,
+                MobilePhones = updateUserDto.MobilePhones,
+                Notes = updateUserDto.Notes
+            }));
         }
 
         /// <summary>
@@ -103,7 +110,7 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteUserCommand{ UserId = id }));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteUserCommand { UserId = id }));
         }
     }
 }

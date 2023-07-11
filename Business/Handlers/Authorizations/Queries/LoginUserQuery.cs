@@ -17,7 +17,7 @@ namespace Business.Handlers.Authorizations.Queries
 {
     public class LoginUserQuery : IRequest<IDataResult<AccessToken>>
     {
-        public string Email { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
 
         public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, IDataResult<AccessToken>>
@@ -40,7 +40,7 @@ namespace Business.Handlers.Authorizations.Queries
             public async Task<IDataResult<AccessToken>> Handle(LoginUserQuery request,
                 CancellationToken cancellationToken)
             {
-                var user = await _userRepository.GetAsync(u => u.Email == request.Email && u.Status);
+                var user = await _userRepository.GetAsync(u => u.Username == request.Username && u.Status);
 
                 if (user == null)
                 {
@@ -57,6 +57,7 @@ namespace Business.Handlers.Authorizations.Queries
                 var accessToken = _tokenHelper.CreateToken<DArchToken>(user);
                 accessToken.Claims = claims.Select(x => x.Name).ToList();
 
+                
                 user.RefreshToken = accessToken.RefreshToken;
                 _userRepository.Update(user);
                 await _userRepository.SaveChangesAsync();
