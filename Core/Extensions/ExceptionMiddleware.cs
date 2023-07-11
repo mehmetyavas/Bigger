@@ -3,8 +3,10 @@ using System.Net;
 using System.Security;
 using System.Threading.Tasks;
 using Core.Utilities.Messages;
+using Core.Utilities.Results;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace Core.Extensions
 {
@@ -64,10 +66,10 @@ namespace Core.Extensions
             }
             else
             {
-                message = ExceptionMessage.InternalServerError;
+                message = e.Message;
             }
 
-            await httpContext.Response.WriteAsync(message);
+            await httpContext.Response.WriteAsync(JsonConvert.SerializeObject(new ErrorResult(message: message)));
         }
     }
 }
