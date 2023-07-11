@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -10,6 +11,11 @@ namespace Core.Extensions
         public static void AddEmail(this ICollection<Claim> claims, string email)
         {
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, email));
+        }
+
+        public static void AddUsername(this ICollection<Claim> claims, string username)
+        {
+            claims.Add(new Claim("Username", username));
         }
 
         public static void AddName(this ICollection<Claim> claims, string name)

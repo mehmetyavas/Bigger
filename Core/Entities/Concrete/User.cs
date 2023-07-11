@@ -8,9 +8,11 @@ namespace Core.Entities.Concrete
     {
         public User()
         {
-            if(UserId==0){
-              RecordDate = DateTime.Now;
+            if (UserId == 0)
+            {
+                RecordDate = DateTime.Now;
             }
+
             UpdateContactDate = DateTime.Now;
             Status = true;
         }
@@ -18,9 +20,11 @@ namespace Core.Entities.Concrete
         public int UserId { get; set; }
         public long CitizenId { get; set; }
         public string FullName { get; set; }
+        public string Username { get; set; }
+
         public string Email { get; set; }
-        [JsonIgnore]
-        public string RefreshToken { get; set; }
+        public string AvatarUrl { get; set; }
+        [JsonIgnore] public string RefreshToken { get; set; }
         public string MobilePhones { get; set; }
         public bool Status { get; set; }
         public DateTime BirthDate { get; set; }

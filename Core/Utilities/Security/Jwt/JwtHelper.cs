@@ -54,8 +54,7 @@ namespace Core.Utilities.Security.Jwt
             };
         }
 
-        public JwtSecurityToken CreateJwtSecurityToken(
-            TokenOptions tokenOptions,
+        public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions,
             User user,
             SigningCredentials signingCredentials)
         {
@@ -68,6 +67,7 @@ namespace Core.Utilities.Security.Jwt
                 signingCredentials: signingCredentials);
             return jwt;
         }
+
         public string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
@@ -77,6 +77,7 @@ namespace Core.Utilities.Security.Jwt
 
             return Convert.ToBase64String(randomNumber);
         }
+
         private static IEnumerable<Claim> SetClaims(User user)
         {
             var claims = new List<Claim>();
@@ -90,6 +91,8 @@ namespace Core.Utilities.Security.Jwt
             {
                 claims.AddName($"{user.FullName}");
             }
+
+            claims.AddUsername(user.Username);
 
             claims.Add(new Claim(ClaimTypes.Role, user.AuthenticationProviderType));
 

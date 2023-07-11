@@ -18,6 +18,7 @@ namespace Business.Handlers.Authorizations.Commands
     public class RegisterUserCommand : IRequest<IResult>
     {
         public string Email { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
         public string FullName { get; set; }
 
@@ -50,7 +51,7 @@ namespace Business.Handlers.Authorizations.Commands
                 var user = new User
                 {
                     Email = request.Email,
-
+                    Username = request.Username,
                     FullName = request.FullName,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,

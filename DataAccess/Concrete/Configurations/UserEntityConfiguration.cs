@@ -12,6 +12,7 @@ namespace DataAccess.Concrete.Configurations
             builder.Property(x => x.CitizenId).IsRequired();
             builder.Property(x => x.FullName).HasMaxLength(100).IsRequired();
             builder.Property(x => x.Email).HasMaxLength(50);
+            builder.Property(x => x.Username).IsRequired().HasMaxLength(25);
             builder.Property(x => x.Status).IsRequired();
             builder.Property(x => x.BirthDate);
             builder.Property(x => x.Gender);
@@ -22,6 +23,7 @@ namespace DataAccess.Concrete.Configurations
 
             builder.HasIndex(x => x.CitizenId);
             builder.HasIndex(x => x.MobilePhones);
+            builder.HasIndex(x => x.Username).IsUnique();
         }
     }
 }
