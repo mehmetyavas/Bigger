@@ -24,14 +24,15 @@ namespace Business.Handlers.Authorizations.Queries
             private readonly ITokenHelper _tokenHelper;
             private readonly ICacheManager _cacheManager;
 
-            public LoginWithRefreshTokenQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper, ICacheManager cacheManager)
+            public LoginWithRefreshTokenQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper,
+                ICacheManager cacheManager)
             {
                 _userRepository = userRepository;
                 _tokenHelper = tokenHelper;
                 _cacheManager = cacheManager;
             }
 
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IResult> Handle(LoginWithRefreshTokenQuery request, CancellationToken cancellationToken)
             {
                 var userToCheck = await _userRepository.GetByRefreshToken(request.RefreshToken);
@@ -41,16 +42,15 @@ namespace Business.Handlers.Authorizations.Queries
                 }
 
 
-				var claims = _userRepository.GetClaims(userToCheck.UserId);
-				_cacheManager.Remove($"{CacheKeys.UserIdForClaim}={userToCheck.UserId}");
-				_cacheManager.Add($"{CacheKeys.UserIdForClaim}={userToCheck.UserId}", claims.Select(x => x.Name));
-				var accessToken = _tokenHelper.CreateToken<AccessToken>(userToCheck);
-				userToCheck.RefreshToken = accessToken.RefreshToken;
-				_userRepository.Update(userToCheck);
-				await _userRepository.SaveChangesAsync();
-				return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
-			}
-		}
-	}
+                var claims = _userRepository.GetClaims(userToCheck.UserId);
+                _cacheManager.Remove($"{CacheKeys.UserIdForClaim}={userToCheck.UserId}");
+                _cacheManager.Add($"{CacheKeys.UserIdForClaim}={userToCheck.UserId}", claims.Select(x => x.Name));
+                var accessToken = _tokenHelper.CreateToken<AccessToken>(userToCheck);
+                userToCheck.RefreshToken = accessToken.RefreshToken;
+                _userRepository.Update(userToCheck);
+                await _userRepository.SaveChangesAsync();
+                return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
+            }
+        }
+    }
 }
-
