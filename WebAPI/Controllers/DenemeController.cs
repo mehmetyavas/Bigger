@@ -13,12 +13,8 @@ namespace WebAPI.Controllers
     [ApiController]
     public class DenemeController : BaseApiController
     {
-        [Consumes("application/json")]
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPost]
-        public async Task<IActionResult> UpdateUserProfile(UpdateUserProfileCommand req)
+        [HttpPost("update")]
+        public async Task<IActionResult> UpdateUserProfile([FromForm] UpdateUserProfileCommand req)
         {
             return GetResponseOnlyResult(await Mediator.Send(req));
         }

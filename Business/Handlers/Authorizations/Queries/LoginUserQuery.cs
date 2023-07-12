@@ -57,7 +57,8 @@ namespace Business.Handlers.Authorizations.Queries
                 var accessToken = _tokenHelper.CreateToken<DArchToken>(user);
                 accessToken.Claims = claims.Select(x => x.Name).ToList();
 
-                
+                accessToken.AvatarUrl = user.AvatarUrl;
+
                 user.RefreshToken = accessToken.RefreshToken;
                 _userRepository.Update(user);
                 await _userRepository.SaveChangesAsync();

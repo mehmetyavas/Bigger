@@ -26,6 +26,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Security.Claims;
 using System.Security.Principal;
+using Business.Services.Image;
 
 namespace Business
 {
@@ -59,12 +60,16 @@ namespace Business
 
             var coreModule = new CoreModule();
 
-            services.AddDependencyResolvers(Configuration, new ICoreModule[] { coreModule });
+            services.AddDependencyResolvers(Configuration, new ICoreModule[]
+            {
+                coreModule
+            });
 
             services.AddTransient<IAuthenticationCoordinator, AuthenticationCoordinator>();
 
             services.AddSingleton<ConfigurationManager>();
 
+            services.AddScoped<IImageService, ImageManager>();
 
             services.AddTransient<ITokenHelper, JwtHelper>();
             services.AddTransient<IElasticSearch, ElasticSearchManager>();
@@ -76,6 +81,7 @@ namespace Business
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(typeof(BusinessStartup).GetTypeInfo().Assembly);
 
+            
             ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) =>
             {
                 return memberInfo.GetCustomAttribute<DisplayAttribute>()

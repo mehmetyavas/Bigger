@@ -3,6 +3,7 @@
 /Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/bin/Debug/net7.0/appsettings.json
 /Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/bin/Debug/net7.0/appsettings.Production.json
 /Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/bin/Debug/net7.0/appsettings.Staging.json
+/Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/bin/Debug/net7.0/WebAPI.staticwebassets.runtime.json
 /Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/bin/Debug/net7.0/WebAPI
 /Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/bin/Debug/net7.0/WebAPI.deps.json
 /Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/bin/Debug/net7.0/WebAPI.runtimeconfig.json

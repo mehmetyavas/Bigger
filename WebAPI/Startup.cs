@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -137,7 +138,7 @@ namespace WebAPI
             app.ConfigureCustomExceptionMiddleware();
 
             _ = app.UseDbOperationClaimCreator();
-            
+
             if (!env.IsProduction())
             {
                 app.UseSwagger();
@@ -148,6 +149,7 @@ namespace WebAPI
                     c.DocExpansion(DocExpansion.None);
                 });
             }
+
             app.UseCors("AllowOrigin");
 
             app.UseHttpsRedirection();
@@ -169,8 +171,25 @@ namespace WebAPI
 
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = (context) =>
+                {
+                    var getUrl = context.Context.Request.Path.Value;
+                    var avatarUrl = context.Context.User.Claims.FirstOrDefault(x => x.Type.EndsWith("AvatarUrl"))?.Value;
+                    if (context.Context.User.Identity is null ||
+                        !context.Context.User.Identity.IsAuthenticated ||
+                        context.Context.User.Claims.FirstOrDefault(x => x.Type.EndsWith("AvatarUrl"))?.Value is null ||
+                        !getUrl.EndsWith(
+                            context.Context.User.Claims.FirstOrDefault(x => x.Type.EndsWith("AvatarUrl"))?.Value)
+                       )
+                        throw new Exception("Not authenticated");
+                },
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath,
+                    "wwwroot/images")),
+                RequestPath = "/images"
+            });
 
-            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
