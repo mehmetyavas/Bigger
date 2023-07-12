@@ -176,7 +176,8 @@ namespace WebAPI
                 OnPrepareResponse = (context) =>
                 {
                     var getUrl = context.Context.Request.Path.Value;
-                    var avatarUrl = context.Context.User.Claims.FirstOrDefault(x => x.Type.EndsWith("AvatarUrl"))?.Value;
+                    var avatarUrl = context.Context.User.Claims.FirstOrDefault(x => x.Type.EndsWith("AvatarUrl"))
+                        ?.Value;
                     if (context.Context.User.Identity is null ||
                         !context.Context.User.Identity.IsAuthenticated ||
                         context.Context.User.Claims.FirstOrDefault(x => x.Type.EndsWith("AvatarUrl"))?.Value is null ||
@@ -189,8 +190,12 @@ namespace WebAPI
                     "wwwroot/images")),
                 RequestPath = "/images"
             });
-
-
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath,
+                    "wwwroot/deneme")),
+                RequestPath = "/deneme"
+            });
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

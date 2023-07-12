@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "yTClYyguq8ukw/N+cdF33rYc2O+ASZOAf7GKMvcJrQ0=",
+  "Hash": "m2wzpr/kpor7PlrCx8EMlb286p/HFDnaMLImRpNxGcg=",
   "Source": "WebAPI",
   "BasePath": "_content/WebAPI",
   "Mode": "Default",
@@ -32,6 +32,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/.DS_Store"
+    },
+    {
+      "Identity": "/Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/wwwroot/deneme/34cd73dc-1810-4295-9832-a77c19bd322e.webp",
+      "SourceId": "WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/wwwroot/",
+      "BasePath": "_content/WebAPI",
+      "RelativePath": "deneme/34cd73dc-1810-4295-9832-a77c19bd322e.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/deneme/34cd73dc-1810-4295-9832-a77c19bd322e.webp"
+    },
+    {
+      "Identity": "/Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/wwwroot/deneme/image.jpg",
+      "SourceId": "WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/wwwroot/",
+      "BasePath": "_content/WebAPI",
+      "RelativePath": "deneme/image.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/deneme/image.jpg"
     },
     {
       "Identity": "/Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/wwwroot/images/.DS_Store",

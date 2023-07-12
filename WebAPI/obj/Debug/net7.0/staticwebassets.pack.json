@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets/.DS_Store"
     },
     {
+      "Id": "/Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/wwwroot/deneme/34cd73dc-1810-4295-9832-a77c19bd322e.webp",
+      "PackagePath": "staticwebassets/deneme/34cd73dc-1810-4295-9832-a77c19bd322e.webp"
+    },
+    {
+      "Id": "/Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/wwwroot/deneme/image.jpg",
+      "PackagePath": "staticwebassets/deneme/image.jpg"
+    },
+    {
       "Id": "/Users/mehmeteminyavas/Documents/GitHub/Bigger/WebAPI/wwwroot/images/.DS_Store",
       "PackagePath": "staticwebassets/images/.DS_Store"
     },
