@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Business;
+using Business.Constants;
 using Business.Helpers;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Extensions;
@@ -184,7 +185,7 @@ namespace WebAPI
                         !getUrl.EndsWith(
                             context.Context.User.Claims.FirstOrDefault(x => x.Type.EndsWith("AvatarUrl"))?.Value)
                        )
-                        throw new Exception("Not authenticated");
+                        throw new Exception(Messages.AuthorizationsDenied);
                 },
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath,
                     "wwwroot/images")),
