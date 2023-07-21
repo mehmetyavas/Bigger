@@ -6,10 +6,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace DataAccess.Migrations.Pg
+namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Products : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -158,7 +158,7 @@ namespace DataAccess.Migrations.Pg
                     BirthDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Gender = table.Column<int>(type: "integer", nullable: false),
                     RecordDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Address = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    Address = table.Column<string>(type: "text", nullable: true),
                     Notes = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     UpdateContactDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "bytea", nullable: true),

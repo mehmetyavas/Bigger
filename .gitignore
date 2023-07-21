@@ -2,5 +2,7 @@
 *.xml
 *.dll
 *.pdb
+*.bin/
+*.obj/
 *.pdb
-*.pdb
+DataAccess/bin/Debug/net7.0/Entities.pdb

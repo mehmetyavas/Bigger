@@ -36,7 +36,6 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
             : base(options)
         {
             Configuration = configuration;
-           
         }
 
         public DbSet<OperationClaim> OperationClaims { get; set; }
@@ -50,6 +49,8 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<Language> Languages { get; set; }
         public DbSet<Translate> Translates { get; set; }
 
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
         protected IConfiguration Configuration { get; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

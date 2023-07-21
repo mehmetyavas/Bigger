@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Core.Entities.Concrete;
 
@@ -12,5 +13,5 @@ public class Product : BaseEntity
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
 
-    public ProductImage Image { get; set; }
+    public virtual ICollection<ProductImage> Images { get; set; }
 }
