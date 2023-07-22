@@ -28,7 +28,8 @@ namespace DataAccess.Concrete.Configurations
             builder
                 .HasOne(x => x.Cart)
                 .WithOne(x => x.User)
-                .HasForeignKey<Cart>(c => c.Id);
+                .HasForeignKey<Cart>(c => c.Id)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

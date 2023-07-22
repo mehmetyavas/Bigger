@@ -12,7 +12,7 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
         builder.HasOne(x => x.User)
             .WithMany()
             .HasForeignKey(x => x.UserId);
-        builder.Property(x => x.street).IsRequired();
+        builder.Property(x => x.Street).IsRequired();
         builder.Property(x => x.City).IsRequired();
         builder.Property(x => x.Country).IsRequired();
         builder.Property(x => x.PostalCode).IsRequired();

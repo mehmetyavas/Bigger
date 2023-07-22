@@ -1,4 +1,11 @@
-﻿// Eğer IDE'den örneğin staging'e migration yapılacaksa
+﻿dotnet ef database update --context ProjectDbContext --project DataAccess --startup-project WebAPI
+
+dotnet ef migrations add cartitem --context ProjectDbContext --project DataAccess --startup-project WebAPI
+
+
+
+
+// Eğer IDE'den örneğin staging'e migration yapılacaksa
 $env:ASPNETCORE_ENVIRONMENT='Staging'
 $env:ASPNETCORE_ENVIRONMENT='Production'
 

@@ -22,6 +22,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder
             .HasMany(x => x.Images)
             .WithOne(x => x.Product)
-            .HasForeignKey(x => x.ProductId);
+            .HasForeignKey(x => x.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

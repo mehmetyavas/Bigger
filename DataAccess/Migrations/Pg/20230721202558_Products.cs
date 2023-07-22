@@ -1,12 +1,12 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-#nullable disable
-
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace DataAccess.Migrations
+namespace DataAccess.Migrations.Pg
 {
     /// <inheritdoc />
     public partial class Products : Migration

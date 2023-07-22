@@ -1,9 +1,9 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
-
-namespace DataAccess.Migrations
+namespace DataAccess.Migrations.Pg
 {
     /// <inheritdoc />
     public partial class cart : Migration
