@@ -1,8 +1,6 @@
+bin/
+obj/
+*.json
 
-*.xml
-*.dll
-*.pdb
-*.bin/
-*.obj/
-*.pdb
-DataAccess/bin/Debug/net7.0/Entities.pdb
+debug/
+*.props

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Entities.Concrete;
@@ -56,6 +57,12 @@ namespace Core.DataAccess.EntityFramework
             return await Context.Set<TEntity>().AsQueryable().FirstOrDefaultAsync(expression);
         }
 
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression,
+            CancellationToken cancellationToken)
+        {
+            return await Context.Set<TEntity>().AsQueryable().FirstOrDefaultAsync(expression, cancellationToken);
+        }
+
         public IEnumerable<TEntity> GetList(Expression<Func<TEntity, bool>> expression = null)
         {
             return expression == null
@@ -70,8 +77,18 @@ namespace Core.DataAccess.EntityFramework
                 : await Context.Set<TEntity>().Where(expression).ToListAsync();
         }
 
+        public async Task<IEnumerable<TEntity>> GetListAsync(CancellationToken cancellationToken,
+            Expression<Func<TEntity, bool>> expression = null)
+        {
+            return expression == null
+                ? await Context.Set<TEntity>().ToListAsync(cancellationToken)
+                : await Context.Set<TEntity>().Where(expression).ToListAsync(cancellationToken);
+        }
+
         //sources: https://www.nuget.org/packages/Apsiyon  |||  https://github.com/vmutlu/ApsiyonFramework
-        public PagingResult<TEntity> GetListForPaging(int page, string propertyName, bool asc, Expression<Func<TEntity, bool>> expression = null, params Expression<Func<TEntity, object>>[] includeEntities)
+        public PagingResult<TEntity> GetListForPaging(int page, string propertyName, bool asc,
+            Expression<Func<TEntity, bool>> expression = null,
+            params Expression<Func<TEntity, object>>[] includeEntities)
         {
             var list = Context.Set<TEntity>().AsQueryable();
 
@@ -90,7 +107,7 @@ namespace Core.DataAccess.EntityFramework
             return new PagingResult<TEntity>(list.ToList(), totalCount, true, $"{totalCount} records listed.");
         }
 
-        
+
         public async Task<PagingResult<TEntity>> GetListForTableSearch(TableGlobalFilter globalFilter)
         {
             if (globalFilter == null)
@@ -102,25 +119,34 @@ namespace Core.DataAccess.EntityFramework
 
             var parameterOfExpression = Expression.Parameter(typeof(TEntity), "x");
 
-            var toLowerMethod = typeof(string).GetMethod("ToLower", new Type[] { });
+            var toLowerMethod = typeof(string).GetMethod("ToLower", new Type[]
+            {
+            });
 
 
             if (globalFilter.PropertyField.Count > 0)
             {
-                var containMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+                var containMethod = typeof(string).GetMethod("Contains", new[]
+                {
+                    typeof(string)
+                });
 
                 var searchedValue = Expression.Constant(globalFilter.SearchText.ToLower(), typeof(string));
 
-                var globalFilterPropertyField = Expression.PropertyOrField(parameterOfExpression, globalFilter.PropertyField[0]);
+                var globalFilterPropertyField =
+                    Expression.PropertyOrField(parameterOfExpression, globalFilter.PropertyField[0]);
 
-                Expression finalExpression = Expression.Call(Expression.Call(globalFilterPropertyField, toLowerMethod), containMethod, searchedValue);
+                Expression finalExpression = Expression.Call(Expression.Call(globalFilterPropertyField, toLowerMethod),
+                    containMethod, searchedValue);
 
                 for (int i = 1; i < globalFilter.PropertyField.Count; i++)
                 {
                     var propertyName = globalFilter.PropertyField[i];
-                    
+
                     globalFilterPropertyField = Expression.PropertyOrField(parameterOfExpression, propertyName);
-                    var globalFilterConstant = Expression.Call(Expression.Call(globalFilterPropertyField, toLowerMethod), containMethod, searchedValue);
+                    var globalFilterConstant =
+                        Expression.Call(Expression.Call(globalFilterPropertyField, toLowerMethod), containMethod,
+                            searchedValue);
 
                     finalExpression = Expression.Or(finalExpression, globalFilterConstant);
                 }
@@ -129,7 +155,9 @@ namespace Core.DataAccess.EntityFramework
                     .Where(Expression.Lambda<Func<TEntity, bool>>(finalExpression, parameterOfExpression));
 
                 list = list.AscOrDescOrder(globalFilter.SortOrder == 1 ? ESort.ASC : ESort.DESC,
-                    globalFilter.SortField).Skip(globalFilter.First).Take(globalFilter.Rows);
+                        globalFilter.SortField)
+                    .Skip(globalFilter.First)
+                    .Take(globalFilter.Rows);
 
                 var totalCountForFilter = list.Count();
 
@@ -140,7 +168,9 @@ namespace Core.DataAccess.EntityFramework
             //Is no have search text
             var totalCount = await Context.Set<TEntity>().CountAsync();
 
-            return new PagingResult<TEntity>(await Context.Set<TEntity>().Skip(globalFilter.First).Take(globalFilter.Rows).ToListAsync(), totalCount, true,
+            return new PagingResult<TEntity>(
+                await Context.Set<TEntity>().Skip(globalFilter.First).Take(globalFilter.Rows).ToListAsync(), totalCount,
+                true,
                 $"{totalCount} records listed.");
         }
 
@@ -173,7 +203,8 @@ namespace Core.DataAccess.EntityFramework
         /// <param name="successAction"></param>
         /// <param name="exceptionAction"></param>
         /// <returns></returns>
-        public TResult InTransaction<TResult>(Func<TResult> action, Action successAction = null, Action<Exception> exceptionAction = null)
+        public TResult InTransaction<TResult>(Func<TResult> action, Action successAction = null,
+            Action<Exception> exceptionAction = null)
         {
             var result = default(TResult);
             try
@@ -223,6 +254,19 @@ namespace Core.DataAccess.EntityFramework
             else
             {
                 return await Context.Set<TEntity>().CountAsync(expression);
+            }
+        }
+
+        public async Task<int> GetCountAsync(CancellationToken cancellationToken,
+            Expression<Func<TEntity, bool>> expression = null)
+        {
+            if (expression == null)
+            {
+                return await Context.Set<TEntity>().CountAsync(cancellationToken);
+            }
+            else
+            {
+                return await Context.Set<TEntity>().CountAsync(expression, cancellationToken);
             }
         }
 
