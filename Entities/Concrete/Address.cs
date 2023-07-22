@@ -1,6 +1,6 @@
+using System.Text.Json.Serialization;
 using Core.Entities;
 using Core.Entities.Concrete;
-using Newtonsoft.Json;
 
 namespace Entities.Concrete;
 

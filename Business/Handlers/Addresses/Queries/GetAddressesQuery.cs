@@ -47,6 +47,9 @@ public record GetAddressesQuery() : IRequest<IDataResult<List<Address>>>
                 .GetListAsync(expression: x => x.UserId == userId,
                     cancellationToken: cancellationToken);
 
+            if (!addresses.Any())
+                return new ErrorDataResult<List<Address>>(Messages.RecordNotFound);
+
             return new SuccessDataResult<List<Address>>(addresses.ToList());
         }
     }

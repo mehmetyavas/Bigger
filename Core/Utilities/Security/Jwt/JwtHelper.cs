@@ -92,8 +92,11 @@ namespace Core.Utilities.Security.Jwt
                 claims.AddName($"{user.FullName}");
             }
 
+            if (!string.IsNullOrEmpty(user.AvatarUrl))
+            {
+                claims.AddAvatar(user.AvatarUrl);
+            }
 
-            claims.AddAvatar(user.AvatarUrl);
             claims.AddUsername(user.Username);
 
             claims.Add(new Claim(ClaimTypes.Role, user.AuthenticationProviderType));
