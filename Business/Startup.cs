@@ -112,9 +112,10 @@ namespace Business
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductImageRepository, ProductImageRepository>();
-            services.AddScoped<ICartRepository, CartRepository>();
+
             services.AddScoped<IAddressRepository, AddressRepository>();
 
+            services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<ICartItemRepository, CartItemRepository>();
 
             services.AddDbContext<ProjectDbContext>(ServiceLifetime.Transient);
@@ -128,16 +129,27 @@ namespace Business
         public void ConfigureStagingServices(IServiceCollection services)
         {
             ConfigureServices(services);
-            services.AddTransient<ILogRepository, LogRepository>();
-            services.AddTransient<ITranslateRepository, TranslateRepository>();
-            services.AddTransient<ILanguageRepository, LanguageRepository>();
+            services.AddScoped<ILogRepository, LogRepository>();
+            services.AddScoped<ITranslateRepository, TranslateRepository>();
+            services.AddScoped<ILanguageRepository, LanguageRepository>();
 
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IUserClaimRepository, UserClaimRepository>();
-            services.AddTransient<IOperationClaimRepository, OperationClaimRepository>();
-            services.AddTransient<IGroupRepository, GroupRepository>();
-            services.AddTransient<IGroupClaimRepository, GroupClaimRepository>();
-            services.AddTransient<IUserGroupRepository, UserGroupRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserClaimRepository, UserClaimRepository>();
+            services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
+            services.AddScoped<IGroupRepository, GroupRepository>();
+            services.AddScoped<IGroupClaimRepository, GroupClaimRepository>();
+            services.AddScoped<IUserGroupRepository, UserGroupRepository>();
+
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductImageRepository, ProductImageRepository>();
+
+            services.AddScoped<IAddressRepository, AddressRepository>();
+
+            services.AddScoped<ICartRepository, CartRepository>();
+            services.AddScoped<ICartItemRepository, CartItemRepository>();
+
+
             services.AddDbContext<ProjectDbContext>();
 
             services.AddSingleton<MongoDbContextBase, MongoDbContext>();
@@ -159,6 +171,15 @@ namespace Business
             services.AddTransient<IOperationClaimRepository, OperationClaimRepository>();
             services.AddTransient<IGroupRepository, GroupRepository>();
             services.AddTransient<IGroupClaimRepository, GroupClaimRepository>();
+
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductImageRepository, ProductImageRepository>();
+
+            services.AddScoped<IAddressRepository, AddressRepository>();
+
+            services.AddScoped<ICartRepository, CartRepository>();
+            services.AddScoped<ICartItemRepository, CartItemRepository>();
 
 
             services.AddDbContext<ProjectDbContext>();
