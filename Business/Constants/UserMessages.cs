@@ -2,6 +2,7 @@
 {
     public static partial class Messages
     {
+        public static string RecordNotFound => "Kayıt Bulunamadı! ";
         public static string UserNotFound => "Kullanıcı Bulunamadı!";
         public static string MaxAddressCountError => "En Fazla 4 Adres Ekleyebilirsiniz!";
     }

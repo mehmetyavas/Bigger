@@ -11,6 +11,7 @@ public class Address : BaseEntity
     public string Street { get; set; }
     public string PostalCode { get; set; }
     public string FullAddress { get; set; }
+    public string Title { get; set; }
 
 
     //relation

@@ -24,7 +24,7 @@ public record CreateAddressCommand(Address Address) : IRequest<IResult>
     public sealed class CreateAddressCommandHandler : IRequestHandler<CreateAddressCommand, IResult>
     {
         private readonly IAddressRepository _addressRepository;
-        private ClaimsPrincipal User { get; set; }
+        private ClaimsPrincipal User { get; }
 
         public CreateAddressCommandHandler(IAddressRepository addressRepository)
         {
