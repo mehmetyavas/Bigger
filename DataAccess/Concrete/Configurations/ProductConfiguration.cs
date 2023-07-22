@@ -1,5 +1,7 @@
 using System;
 using Core.Entities.Concrete;
+using Entities;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ServiceStack;

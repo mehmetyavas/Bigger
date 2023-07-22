@@ -1,4 +1,5 @@
 ﻿using Core.Entities.Concrete;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -23,6 +24,11 @@ namespace DataAccess.Concrete.Configurations
             builder.HasIndex(x => x.CitizenId);
             builder.HasIndex(x => x.MobilePhones);
             builder.HasIndex(x => x.Username).IsUnique();
+
+            builder
+                .HasOne(x => x.Cart)
+                .WithOne(x => x.User)
+                .HasForeignKey<Cart>(c => c.Id);
         }
     }
 }

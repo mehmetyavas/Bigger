@@ -9,6 +9,7 @@ using Core.DataAccess;
 using Core.Entities.Concrete;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
+using Entities.Concrete;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;

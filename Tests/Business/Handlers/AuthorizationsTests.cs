@@ -12,6 +12,7 @@ using Core.Entities.Concrete;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
+using Entities.Concrete;
 using FluentAssertions;
 using MediatR;
 using Moq;

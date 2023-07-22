@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.DataAccess;
 using Core.Entities.Concrete;
+using Entities.Concrete;
 
 namespace DataAccess.Abstract
 {

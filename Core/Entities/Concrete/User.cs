@@ -34,6 +34,8 @@ namespace Core.Entities.Concrete
         public string Notes { get; set; }
         public DateTime UpdateContactDate { get; set; }
 
+        public virtual Cart Cart { get; set; }
+
         /// <summary>
         /// This is required when encoding token. Not in db. The default is Person.
         /// </summary>

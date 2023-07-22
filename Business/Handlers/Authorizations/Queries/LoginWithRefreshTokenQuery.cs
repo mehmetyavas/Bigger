@@ -10,6 +10,7 @@ using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
+using Entities.Concrete;
 using MediatR;
 
 namespace Business.Handlers.Authorizations.Queries

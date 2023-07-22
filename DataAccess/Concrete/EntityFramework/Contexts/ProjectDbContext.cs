@@ -1,6 +1,8 @@
 using System;
 using System.Reflection;
 using Core.Entities.Concrete;
+using Entities;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -51,6 +53,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<Cart> Carts { get; set; }
         protected IConfiguration Configuration { get; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

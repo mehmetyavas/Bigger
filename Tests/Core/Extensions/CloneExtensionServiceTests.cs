@@ -1,5 +1,6 @@
 ﻿using Core.Entities.Concrete;
 using Core.Extensions;
+using Entities.Concrete;
 using FluentAssertions;
 using NUnit.Framework;
 using Tests.Helpers;

@@ -1,6 +1,7 @@
 using System;
+using Core.Entities;
 
-namespace Core.Entities.Concrete;
+namespace Entities.Concrete;
 
 public class ProductImage : BaseEntity
 {
