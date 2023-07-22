@@ -15,5 +15,5 @@ public class Address : BaseEntity
 
     //relation
     [JsonIgnore] public User User { get; set; }
-    public int UserId { get; set; }
+    [JsonIgnore] public int UserId { get; set; }
 }
