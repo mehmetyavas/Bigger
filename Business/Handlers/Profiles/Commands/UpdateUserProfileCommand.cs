@@ -38,11 +38,14 @@ public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfile
         if (userToUpdate is null)
             return new ErrorResult(Messages.UserNotFound);
 
+
         var url = userToUpdate.AvatarUrl;
         userToUpdate.FullName = $"{request.FirstName} {request.LastName}";
         userToUpdate.Email = request.Email;
         userToUpdate.MobilePhones = request.MobilPhone;
-        userToUpdate.AvatarUrl = await _imageService.SaveImageAsync(request.Avatar, url);
+
+        _imageService.PathDir = "user";
+        userToUpdate.AvatarUrl = await _imageService.UpdateImageAsync(request.Avatar, url);
 
         _userRepository.Update(userToUpdate);
         await _userRepository.SaveChangesAsync();

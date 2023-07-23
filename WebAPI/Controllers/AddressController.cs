@@ -68,7 +68,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResult))]
-        [HttpPut]
+        [HttpPost("update")]
         public async Task<IActionResult> UpdateAddress(UpdateAddressCommand req)
         {
             var record = await Mediator.Send(req);
@@ -83,7 +83,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResult))]
-        [HttpDelete("{id}")]
+        [HttpPost("delete/{id}")]
         public async Task<IActionResult> DeleteAddress(int id)
         {
             var record = await Mediator.Send(new DeleteAddressCommand(id));

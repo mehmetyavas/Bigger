@@ -5,5 +5,7 @@ namespace Business.Services.Image;
 
 public interface IImageService
 {
-    Task<string> SaveImageAsync(IFormFile file, string avatarUrl);
+    public string PathDir { get; set; }
+    Task<string> UpdateImageAsync(IFormFile file, string avatarUrl);
+    Task<string> SaveImageAsync(IFormFile file);
 }

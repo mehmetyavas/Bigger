@@ -18,6 +18,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(x => x.Slug).IsRequired();
         builder.Property(x => x.Title).IsRequired();
         builder.Property(x => x.BaseImageUrl).IsRequired();
+        builder.Property(x => x.StockCode).IsRequired();
 
         builder
             .HasMany(x => x.Images)

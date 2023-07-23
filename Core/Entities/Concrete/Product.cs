@@ -10,6 +10,7 @@ public class Product : BaseEntity
     public string Slug { get; set; }
     public string BaseImageUrl { get; set; }
     public decimal Price { get; set; }
+    public Guid StockCode { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
 

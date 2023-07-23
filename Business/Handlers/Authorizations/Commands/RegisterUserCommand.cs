@@ -28,10 +28,15 @@ namespace Business.Handlers.Authorizations.Commands
         {
             private readonly IUserRepository _userRepository;
 
+            private readonly IUserGroupRepository _userGroupRepository;
+            private readonly IGroupRepository _groupRepository;
 
-            public RegisterUserCommandHandler(IUserRepository userRepository)
+            public RegisterUserCommandHandler(IUserRepository userRepository, IUserGroupRepository userGroupRepository,
+                IGroupRepository groupRepository)
             {
                 _userRepository = userRepository;
+                _userGroupRepository = userGroupRepository;
+                _groupRepository = groupRepository;
             }
 
 
@@ -47,6 +52,15 @@ namespace Business.Handlers.Authorizations.Commands
                     return new ErrorResult(Messages.NameAlreadyExist);
                 }
 
+                var group = await _groupRepository.GetAsync(x => x.GroupName == "user");
+                if (group is null)
+                {
+                    _groupRepository.Add(new Group { GroupName = "user" });
+                    await _groupRepository.SaveChangesAsync();
+
+                    group = await _groupRepository.GetAsync(x => x.GroupName == "user");
+                }
+
                 HashingHelper.CreatePasswordHash(request.Password, out var passwordSalt, out var passwordHash);
                 var user = new User
                 {
@@ -60,6 +74,18 @@ namespace Business.Handlers.Authorizations.Commands
 
                 _userRepository.Add(user);
                 await _userRepository.SaveChangesAsync();
+
+
+                var getUser = await _userRepository.GetAsync(x => x.Email == request.Email);
+
+
+                _userGroupRepository.Add(new UserGroup
+                {
+                    GroupId = group.Id,
+                    UserId = getUser.UserId
+                });
+                await _userGroupRepository.SaveChangesAsync();
+
                 return new SuccessResult(Messages.Added);
             }
         }

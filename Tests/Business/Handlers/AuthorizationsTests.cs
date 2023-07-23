@@ -32,6 +32,9 @@ namespace Tests.Business.Handlers
         private Mock<ITokenHelper> _tokenHelper;
         private Mock<IMediator> _mediator;
         private Mock<ICacheManager> _cacheManager;
+        private Mock<IUserGroupRepository> _userGroupRepository;
+
+        private Mock<IGroupRepository> _groupRepository;
 
         private LoginUserQueryHandler _loginUserQueryHandler;
         private LoginUserQuery _loginUserQuery;
@@ -46,11 +49,16 @@ namespace Tests.Business.Handlers
             _userRepository = new Mock<IUserRepository>();
             _tokenHelper = new Mock<ITokenHelper>();
             _mediator = new Mock<IMediator>();
+            _userGroupRepository = new Mock<IUserGroupRepository>();
+            _groupRepository = new Mock<IGroupRepository>();
             _cacheManager = new Mock<ICacheManager>();
 
             _loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object,
                 _mediator.Object, _cacheManager.Object);
-            _registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object);
+            _registerUserCommandHandler =
+                new RegisterUserCommandHandler(_userRepository.Object,
+                    _userGroupRepository.Object,
+                    _groupRepository.Object);
             _forgotPasswordCommandHandler = new ForgotPasswordCommandHandler(_userRepository.Object);
         }
 

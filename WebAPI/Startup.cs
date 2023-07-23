@@ -181,14 +181,14 @@ public partial class Startup : BusinessStartup
                     throw new Exception(Messages.AuthorizationsDenied);
             },
             FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath,
-                "wwwroot/images")),
-            RequestPath = "/images"
+                "wwwroot/images/user")),
+            RequestPath = "/images/user"
         });
         app.UseStaticFiles(new StaticFileOptions
         {
             FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath,
-                "wwwroot/deneme")),
-            RequestPath = "/deneme"
+                "wwwroot/images/product")),
+            RequestPath = "/images/product"
         });
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     }
