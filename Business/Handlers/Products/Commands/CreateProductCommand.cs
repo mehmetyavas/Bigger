@@ -14,36 +14,34 @@ using Microsoft.AspNetCore.Http;
 
 namespace Business.Handlers.Products.Commands;
 
-public record CreateProductsCommand : IRequest<IDataResult<object>>
+public record CreateProductCommand : IRequest<IDataResult<object>>
 {
     public string Title { get; set; }
     public string Description { get; set; }
     public string Slug { get; set; }
     public IFormFile Image { get; set; }
     public decimal Price { get; set; }
-    public Guid StockCode { get; set; }
+    public string StockCode { get; set; }
 
-    public class CreateProductsCommandHandler : IRequestHandler<CreateProductsCommand, IDataResult<object>>
+    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, IDataResult<object>>
     {
         private readonly IProductRepository _productRepository;
         private readonly IImageService _imageService;
 
-        public CreateProductsCommandHandler(IProductRepository productRepository, IImageService imageService)
+        public CreateProductCommandHandler(IProductRepository productRepository, IImageService imageService)
         {
             _productRepository = productRepository;
             _imageService = imageService;
+            _imageService.PathDir = "product";
         }
 
-        [SecuredOperation]
+        // [SecuredOperation]
         [TransactionScopeAspectAsync]
         [LogAspect(typeof(PostgreSqlLogger))]
         // ValidationAspect
-        public async Task<IDataResult<object>> Handle(CreateProductsCommand request,
+        public async Task<IDataResult<object>> Handle(CreateProductCommand request,
             CancellationToken cancellationToken)
         {
-            _imageService.PathDir = "image";
-
-
             var record = await Record(request);
             _productRepository.Add(record);
 
@@ -52,7 +50,7 @@ public record CreateProductsCommand : IRequest<IDataResult<object>>
             return new SuccessDataResult<object>();
         }
 
-        private async Task<Product> Record(CreateProductsCommand request)
+        private async Task<Product> Record(CreateProductCommand request)
         {
             var redord = new Product
             {

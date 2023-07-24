@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Business.Handlers.Profiles;
+using Business.Handlers.Products.Commands;
 using Business.Handlers.Profiles.Commands;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -17,6 +13,22 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> UpdateUserProfile([FromForm] UpdateUserProfileCommand req)
         {
             return GetResponseOnlyResult(await Mediator.Send(req));
+        }
+
+
+        [HttpPost("productCreate")]
+        public async Task<IActionResult> CreateProduct([FromForm] CreateProductCommand req)
+        {
+            var result = await Mediator.Send(req);
+            return GetResponseOnlyResult(result);
+        }
+
+
+        [HttpPost("productUpdate")]
+        public async Task<IActionResult> UpdateProduct([FromForm] UpdateProductCommand req)
+        {
+            var result = await Mediator.Send(req);
+            return GetResponseOnlyResult(result);
         }
     }
 }
