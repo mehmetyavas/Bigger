@@ -1,7 +1,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Business.BusinessAspects;
 using Business.Services.Image;
+using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Transaction;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -33,6 +37,10 @@ public record UpdateProductCommand : IRequest<IResult>
             _imageService.PathDir = "product";
         }
 
+        //[SecuredOperation]
+        
+        [TransactionScopeAspectAsync]
+        [LogAspect(typeof(PostgreSqlLogger))]
         public async Task<IResult> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var record = await _productRepository.GetAsync(x => x.Id == request.Id);

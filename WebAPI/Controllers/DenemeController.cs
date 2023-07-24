@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Business.Handlers.Products.Commands;
+using Business.Handlers.Products.Queries;
 using Business.Handlers.Profiles.Commands;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,14 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> CreateProduct([FromForm] CreateProductCommand req)
         {
             var result = await Mediator.Send(req);
+            return GetResponseOnlyResult(result);
+        }
+
+
+        [HttpGet("getProduct")]
+        public async Task<IActionResult> GetProduct(string query)
+        {
+            var result = await Mediator.Send(new GetProductQuery(query));
             return GetResponseOnlyResult(result);
         }
 

@@ -2,15 +2,18 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Business.BusinessAspects;
+using Business.Handlers.Products.ValidationRules;
 using Business.Services.Image;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using IResult = Core.Utilities.Results.IResult;
 
 namespace Business.Handlers.Products.Commands;
 
@@ -23,7 +26,7 @@ public record CreateProductCommand : IRequest<IDataResult<object>>
     public decimal Price { get; set; }
     public string StockCode { get; set; }
 
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, IDataResult<object>>
+    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, IResult>
     {
         private readonly IProductRepository _productRepository;
         private readonly IImageService _imageService;
@@ -35,11 +38,11 @@ public record CreateProductCommand : IRequest<IDataResult<object>>
             _imageService.PathDir = "product";
         }
 
-        // [SecuredOperation]
+        //[SecuredOperation]
+        [ValidationAspect(typeof(CreateProductValidator))]
         [TransactionScopeAspectAsync]
         [LogAspect(typeof(PostgreSqlLogger))]
-        // ValidationAspect
-        public async Task<IDataResult<object>> Handle(CreateProductCommand request,
+        public async Task<IResult> Handle(CreateProductCommand request,
             CancellationToken cancellationToken)
         {
             var record = await Record(request);
@@ -47,7 +50,7 @@ public record CreateProductCommand : IRequest<IDataResult<object>>
 
             await _productRepository.SaveChangesAsync();
 
-            return new SuccessDataResult<object>();
+            return new SuccessResult();
         }
 
         private async Task<Product> Record(CreateProductCommand request)

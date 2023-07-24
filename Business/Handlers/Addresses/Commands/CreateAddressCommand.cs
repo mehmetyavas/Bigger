@@ -5,8 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Business.BusinessAspects;
 using Business.Constants;
+using Business.Handlers.Addresses.ValidationRules;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.IoC;
 using Core.Utilities.Results;
@@ -35,9 +37,10 @@ public record CreateAddressCommand(Address Address) : IRequest<IResult>
                 User = httpContext.User;
         }
 
+        [ValidationAspect(typeof(CreateAddressValidator))]
         [TransactionScopeAspectAsync]
         [LogAspect(typeof(PostgreSqlLogger))]
-        [SecuredOperation]
+        [SecuredOperation(Priority = 1)]
         public async Task<IResult> Handle(CreateAddressCommand request, CancellationToken cancellationToken)
         {
             if (User is null)
