@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Business.Enums;
 using Business.Handlers.Products.Commands;
 using Business.Handlers.Products.Queries;
 using Business.Handlers.Profiles.Commands;
@@ -26,9 +27,10 @@ namespace WebAPI.Controllers
 
 
         [HttpGet("getProduct")]
-        public async Task<IActionResult> GetProduct(string query)
+        public async Task<IActionResult> GetProduct(string q)
         {
-            var result = await Mediator.Send(new GetProductQuery(query));
+            var result = await Mediator.Send(new GetProductQuery(q));
+            var deneme = OrderEnum.priceASC;
             return GetResponseOnlyResult(result);
         }
 
