@@ -41,5 +41,8 @@ namespace WebAPI.Controllers
             var result = await Mediator.Send(req);
             return GetResponseOnlyResult(result);
         }
+        
+        
+        
     }
 }
