@@ -4,11 +4,11 @@ using Business.Handlers.OperationClaims.Commands;
 using Business.Handlers.OperationClaims.Queries;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Entities.Dtos;
 
-namespace WebAPI.Controllers
+namespace WebAPI.Controllers.Auth
 {
     /// <summary>
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.

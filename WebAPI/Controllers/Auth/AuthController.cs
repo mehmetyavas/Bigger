@@ -7,11 +7,9 @@ using Core.Utilities.Security.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Entities.Dtos;
 using IResult = Core.Utilities.Results.IResult;
 
-namespace WebAPI.Controllers
+namespace WebAPI.Controllers.Auth
 {
     /// <summary>
     /// Make it Authorization operations

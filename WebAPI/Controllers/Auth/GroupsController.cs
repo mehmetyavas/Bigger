@@ -1,100 +1,101 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Business.Handlers.UserClaims.Commands;
-using Business.Handlers.UserClaims.Queries;
+using Business.Handlers.Groups.Commands;
+using Business.Handlers.Groups.Queries;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Entities.Dtos;
 
-namespace WebAPI.Controllers
+namespace WebAPI.Controllers.Auth
 {
     /// <summary>
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
     ///
-    [Route("api/v{version:apiVersion}/user-claims")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class UserClaimsController : BaseApiController
+    public class GroupsController : BaseApiController
     {
         /// <summary>
-        /// List UserClaims
+        /// List Groups
         /// </summary>
-        /// <remarks>bla bla bla UserClaims</remarks>
-        /// <return>UserClaims List</return>
+        /// <remarks>bla bla bla Groups</remarks>
+        /// <return>Grup List</return>
         /// <response code="200"></response>
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserClaim>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        // [AllowAnonymous]
+        // [Produces("application/json","text/plain")]
+        // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Group>))]
+        // [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
         public async Task<IActionResult> GetList()
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimsQuery()));
-        }
-
-        /// <summary>
-        /// Id sine göre detaylarını getirir.
-        /// </summary>
-        /// <remarks>bla bla bla </remarks>
-        /// <return>UserClaims List</return>
-        /// <response code="200"></response>
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserClaim>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetByUserId([FromRoute]int userid)
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimLookupQuery { UserId = userid }));
+            return GetResponseOnlyResultData(await Mediator.Send(new GetGroupsQuery()));
         }
 
         /// <summary>
         /// It brings the details according to its id.
         /// </summary>
         /// <remarks>bla bla bla </remarks>
-        /// <return>UserClaims List</return>
+        /// <return>Grup List</return>
+        /// <response code="200"></response>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById( int id)
+        {
+            return GetResponseOnlyResultData(await Mediator.Send(new GetGroupQuery { GroupId = id }));
+        }
+
+        /// <summary>
+        /// Group Lookup
+        /// </summary>
+        /// <remarks>Group Lookup döner </remarks>
+        /// <return>Grup Lokup</return>
         /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("users/{id}")]
-        public async Task<IActionResult> GetOperationClaimByUserId([FromRoute]int id)
+        [HttpGet("lookups")]
+        public async Task<IActionResult> Getselectedlist()
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimLookupByUserIdQuery { Id = id }));
+            return GetResponseOnlyResultData(await Mediator.Send(new GetGroupLookupQuery()));
         }
 
         /// <summary>
-        /// Add GroupClaim.
+        /// Add Group .
         /// </summary>
-        /// <param name="createUserClaim"></param>
+        /// <param name="createGroup"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateUserClaimCommand createUserClaim)
+        public async Task<IActionResult> Add([FromBody] CreateGroupCommand createGroup)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(createUserClaim));
+            return GetResponseOnlyResultMessage(await Mediator.Send(createGroup));
         }
 
         /// <summary>
-        /// Update GroupClaim.
+        /// Update Group.
         /// </summary>
-        /// <param name="updateUserClaimDto"></param>
+        /// <param name="updateGroupDto"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateUserClaimDto updateUserClaimDto)
+        public async Task<IActionResult> Update([FromBody] UpdateGroupDto updateGroupDto)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new  UpdateUserClaimCommand{UserId = updateUserClaimDto.UserId, ClaimId = updateUserClaimDto.ClaimIds}));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateGroupCommand{ Id = updateGroupDto.Id, GroupName = updateGroupDto.GroupName }));
         }
 
         /// <summary>
-        /// Delete GroupClaim.
+        /// Delete Group.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -105,7 +106,7 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteUserClaimCommand{Id = id}));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteGroupCommand{ Id = id }));
         }
     }
 }

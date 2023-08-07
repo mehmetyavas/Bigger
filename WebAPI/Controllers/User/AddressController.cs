@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Business.Handlers.Addresses.Commands;
 using Business.Handlers.Addresses.Queries;
@@ -10,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using IResult = Core.Utilities.Results.IResult;
 
-namespace WebAPI.Controllers
+namespace WebAPI.Controllers.User
 {
     [Route("api/address")]
     [ApiController]

@@ -2,14 +2,13 @@
 using System.Threading.Tasks;
 using Business.Handlers.Languages.Commands;
 using Business.Handlers.Languages.Queries;
-using Core.Entities.Concrete;
 using Core.Entities.Dtos;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Entities.Dtos;
 
-namespace WebAPI.Controllers
+namespace WebAPI.Controllers.Language
 {
     /// <summary>
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
@@ -57,7 +56,7 @@ namespace WebAPI.Controllers
         /// <return>Languages List</return>
         /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Language>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Core.Entities.Concrete.Language>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
         public async Task<IActionResult> GetList()
@@ -72,7 +71,7 @@ namespace WebAPI.Controllers
         /// <return>Language List</return>
         /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Language))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Entities.Concrete.Language))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
