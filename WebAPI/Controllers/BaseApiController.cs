@@ -11,7 +11,7 @@ namespace WebAPI.Controllers
     /// </summary>
     // [Authorize]
     [Route("[controller]")]
-    [ApiController]
+    [ApiController][Authorize]
     public class BaseApiController : Controller
     {
         private IMediator _mediator;
