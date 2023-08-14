@@ -7,3 +7,4 @@ debug/
 *.exe
 *.json
 WebAPI/logs/20230803.txt
+Business/.DS_Store
